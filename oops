@@ -1,0 +1,64 @@
+"""class student:
+    def __init__(self,name,age,form,teacher):
+        self.name=name
+        self.age=age
+        self.form=form
+        self.teacher=teacher
+        self.grade=12
+    def show_details(self):
+        print(f"name:{self.name}")
+        print(f"age:{self.age}")
+        print(f"form:{self.form}")
+        print(f"teacher:{self.teacher}")
+        print(f"grade:{self.grade}")
+    
+
+s1=student("Joan","16","Robert","Shirin")
+s1.show_details()
+s1.name="Jean"
+s1.show_details()
+print(s1.age)"""
+
+#python inheritance
+
+#parent class
+"""class person:
+    def __init__(self,name,id_num):
+        self.name=name
+        self.id_num=id_num
+    def details(self):
+        print(f"Name: {self.name}")
+        print(f"Id Number: {self.id_num}")"""
+
+#child class
+"""class employee(person):
+    def __init__(self,name,id_num,salary,position):
+        person.__init__(self,name,id_num)
+        self.salary=salary
+        self.position=position
+    def showDetails(self):
+        print(f"Name: {self.name}")
+        print(f"Id Number: {self.id_num}")
+        print(f"Salary: {self.salary}")
+        print(f"Postions: {self.position}")
+    
+e1=employee("Nick","12345","£21,000","manager")
+e1.details()"""
+
+
+class fruits:
+    def __init__(self,name,colour,taste):
+        self.name=name
+        self.colour=colour
+        self.taste=taste
+    def details(self):
+        print(f"Name: {self.name}")
+        print(f"Colour(s): {self.colour}")
+        print(f"Taste: {self.taste}")
+
+f1=fruits("Lemon","Yellow","Sour")
+f2=fruits("Pear","Green","Sweet")
+f3=fruits("Pineapple","Yellow","Tangy")
+f1.details()
+f2.details()
+f3.details()
