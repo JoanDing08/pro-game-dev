@@ -1,0 +1,25 @@
+import pygame
+
+pygame.init()
+screen=pygame.display.set_mode((600,600))
+pygame.display.update()
+class rectangle:
+    def __init__(self,colour,dimensions):
+        self.screen=screen
+        self.colour=colour
+        self.dimensions=dimensions
+    def draw(self):
+        self.drawRect=pygame.draw.rect(self.screen,self.colour,self.dimensions)
+colour1=rectangle("red",(50,50,45,45))
+colour2=rectangle("yellow",(300,250,100,100))
+colour3=rectangle("blue",(450,400,70,70))
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+    screen.fill("white")
+    colour1.draw()
+    colour2.draw()
+    colour3.draw()
+    pygame.display.update()
