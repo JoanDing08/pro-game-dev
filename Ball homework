@@ -1,0 +1,35 @@
+import pygame
+
+pygame.init()
+screen=pygame.display.set_mode((900,600))
+pygame.display.set_caption("Ball")
+ball1=pygame.draw.circle(surface=screen,color="yellow",center=[100,100],radius=40)
+ball2=pygame.draw.circle(surface=screen,color="red",center=[50,150],radius=35)
+ball3=pygame.draw.circle(surface=screen,color="purple",center=[450,500],radius=20)
+speed1=[2,2]
+speed2=[3,3]
+speed3=[7,7]
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+    screen.fill("black")
+    ball1=ball1.move(speed1)
+    ball2=ball2.move(speed2)
+    ball3=ball3.move(speed3)
+    if ball1.left<=0 or ball1.right>=900:
+        speed1[0]=-speed1[0]
+    if ball1.top<=0 or ball1.bottom>=600:
+        speed1[1]=-speed1[1]
+    if ball2.left<=0 or ball2.right>=900:
+        speed2[0]=-speed2[0]
+    if ball2.top<=0 or ball2.bottom>=600:
+        speed2[1]=-speed2[1]
+    if ball3.left<=0 or ball3.right>=900:
+        speed3[0]=-speed3[0]
+    if ball3.top<=0 or ball3.bottom>=600:
+        speed3[1]=-speed3[1]
+    pygame.draw.circle(surface=screen,color="yellow",center=ball1.center,radius=50)
+    pygame.draw.circle(surface=screen,color="red",center=ball2.center,radius=35)
+    pygame.draw.circle(surface=screen,color="purple",center=ball3.center,radius=15)
+    pygame.display.update()
