@@ -1,0 +1,41 @@
+import pygame
+
+pygame.init()
+screen=pygame.display.set_mode((650,700))
+screen.fill("black")
+
+class circles:
+    def __init__(self,color,pos,r):
+        self.color=color
+        self.r=r
+        self.pos=pos
+        self.screen=screen
+    def draw(self):
+        pygame.draw.circle(self.screen,self.color,self.pos,self.r)
+    def draw2(self,x):
+        self.r+=x
+        pygame.draw.circle(self.screen,self.color,self.pos,self.r)
+
+c1=circles("purple",(300,300),160)
+c2=circles("pink",(300,300),140)
+c3=circles("blue",(300,300),70)
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+        if event.type==pygame.MOUSEBUTTONDOWN:
+            c1.draw()
+            c2.draw()
+            c3.draw()
+            pygame.display.update()
+        elif event.type==pygame.MOUSEBUTTONUP:
+            c1.draw2(5)
+            c2.draw2(5)
+            c3.draw2(5)
+            pygame.display.update()
+        elif event.type==pygame.MOUSEMOTION:
+            pos=pygame.mouse.get_pos()
+            c4=circles("white",(pos),5)
+            c4.draw()
+            pygame.display.update()
