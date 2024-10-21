@@ -1,0 +1,41 @@
+import pygame
+
+pygame.init()
+screen=pygame.display.set_mode((600,700))
+
+class rocket(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image=pygame.image.load("rocket.png")
+        self.rect=self.image.get_rect()
+    def update(self,keys_pressed):
+        if keys_pressed[pygame.K_UP]:
+            self.rect.move_ip(0,-5)
+        if keys_pressed[pygame.K_DOWN]:
+            self.rect.move_ip(0,5)
+        if keys_pressed[pygame.K_LEFT]:
+            self.rect.move_ip(-5,0)
+        if keys_pressed[pygame.K_RIGHT]:
+            self.rect.move_ip(5,0)
+        if self.rect.left<0:
+            self.rect.left=0
+        if self.rect.right>600:
+            self.rect.right=600
+        if self.rect.top<0:
+            self.rect.top=0
+        if self.rect.bottom>700:
+            self.rect.bottom=700
+
+r1=pygame.sprite.Group()
+spaceship=rocket()
+r1.add(spaceship)
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+    keys_pressed=pygame.key.get_pressed()
+    spaceship.update(keys_pressed)
+    screen.blit(pygame.image.load("space.png"),(0,0))
+    r1.draw(screen)
+    pygame.display.update()
