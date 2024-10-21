@@ -1,0 +1,36 @@
+import pygame
+import time
+pygame.init()
+screen=pygame.display.set_mode((500,500))
+pygame.display.set_caption("happy birthday")
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+    img1=pygame.image.load("balloons.jpg")
+    img1=pygame.transform.scale(img1,(500,500))
+    screen.blit(img1,(0,0))
+    font=pygame.font.SysFont("Calibri",50)
+    text1=font.render("Happy Birthday",True,"red")
+    screen.blit(text1,(90,320))
+    pygame.display.update()
+    time.sleep(5)
+
+    img2=pygame.image.load("present.jpg")
+    img2=pygame.transform.scale(img2,(500,500))
+    screen.blit(img2,(0,0))
+    font=pygame.font.SysFont("Calibri",50)
+    text1=font.render("Happy Birthday",True,"red")
+    screen.blit(text1,(90,60))
+    pygame.display.update()
+    time.sleep(5)
+
+    img3=pygame.image.load("cake.jpg")
+    img3=pygame.transform.scale(img3,(500,500))
+    screen.blit(img3,(0,0))
+    font=pygame.font.SysFont("Calibri",50)
+    text1=font.render("Happy Birthday",True,"red")
+    screen.blit(text1,(90,420))
+    pygame.display.update()
+    time.sleep(5)
