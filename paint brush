@@ -29,3 +29,6 @@ while True:
             c1=circles(pencolor,(pos),3)
             c1.draw()
             pygame.display.update()
+        if event.type==pygame.MOUSEBUTTONDOWN:
+            pencolor=random.choice(colours)
+            pygame.display.update()
