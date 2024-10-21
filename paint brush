@@ -1,0 +1,31 @@
+import pygame
+import random
+
+pygame.init()
+screen=pygame.display.set_mode((650,700))
+screen.fill("white")
+
+colours=["black","red","yellow","blue","green","purple","orange","pink","light blue"]
+pencolor=random.choice(colours)
+
+
+
+class circles:
+    def __init__(self,color,pos,r):
+        self.color=color
+        self.r=r
+        self.pos=pos
+        self.screen=screen
+    def draw(self):
+        pygame.draw.circle(self.screen,self.color,self.pos,self.r)
+
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+        if event.type==pygame.MOUSEMOTION:
+            pos=pygame.mouse.get_pos()
+            c1=circles(pencolor,(pos),3)
+            c1.draw()
+            pygame.display.update()
