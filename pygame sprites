@@ -1,0 +1,38 @@
+import pygame
+import random
+
+pygame.init()
+
+screen=pygame.display.set_mode((600,700))
+
+class block(pygame.sprite.Sprite):
+    def __init__(self,color,width,height):
+        super().__init__()
+        self.image=pygame.Surface((width,height))
+        self.image.fill(color)
+        self.rect=self.image.get_rect()
+
+black1=pygame.sprite.Group()
+allSprites=pygame.sprite.Group()
+
+for i in range(20):
+    b1=block("black",20,20)
+    b1.rect.x=random.randrange(600)
+    b1.rect.y=random.randrange(700)
+    black1.add(b1)
+    allSprites.add(b1)
+
+r1=block("red",25,25)
+allSprites.add(r1)
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+    screen.fill("white")
+    pos=pygame.mouse.get_pos()
+    r1.rect.x=pos[0]
+    r1.rect.y=pos[1]
+    hitList=pygame.sprite.spritecollide(r1,black1,True)
+    allSprites.draw(screen)
+    pygame.display.update()
