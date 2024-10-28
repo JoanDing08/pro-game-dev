@@ -1,0 +1,35 @@
+import pygame
+import time
+pygame.init()
+screen=pygame.display.set_mode((500,700))
+pygame.display.set_caption("You are invited!")
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+    img1=pygame.image.load("floral invite.jpg")
+    img1=pygame.transform.scale(img1,(500,700))
+    screen.blit(img1,(0,0))
+    pygame.display.update()
+    time.sleep(2)
+
+    img2=pygame.image.load("floral invite 3.jpg")
+    img2=pygame.transform.scale(img2,(500,700))
+    screen.blit(img2,(0,0))
+    font=pygame.font.SysFont("Lucida Handwriting",30)
+    text1=font.render("You are invited!",True,"crimson")
+    screen.blit(text1,(120,340))
+    pygame.display.update()
+    time.sleep(2)
+
+    img3=pygame.image.load("floral invite 2.jpg")
+    img3=pygame.transform.scale(img3,(500,700))
+    screen.blit(img3,(0,0))
+    font=pygame.font.SysFont("Lucida Handwriting",15)
+    text1=font.render("Event: Jetlearn lesson",True,"white")
+    text2=font.render("Time: 05/11 16:00",True,"grey95")
+    screen.blit(text1,(170,440))
+    screen.blit(text2,(180,460))
+    pygame.display.update()
+    time.sleep(2)
