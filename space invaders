@@ -6,8 +6,8 @@ yellow=pygame.transform.rotate(pygame.transform.scale(pygame.image.load("yellow 
 red=pygame.transform.rotate(pygame.transform.scale(pygame.image.load("red rocket.png"),(50,50)),270)
 bg=pygame.transform.scale(pygame.image.load("space.png"),(800,700))
 
-yel=pygame.Rect(20,350,50,50)
-red=pygame.Rect(780,350,50,50)
+yelship=pygame.Rect(20,350,50,50)
+redship=pygame.Rect(780,350,50,50)
 border=pygame.Rect(385,0,30,700)
 yHealth=10
 rHealth=10
@@ -16,5 +16,86 @@ playerSpd=3
 yellowBullets=[]
 redBullets=[]
 gameover=False
+font=pygame.font.SysFont("calibri",20)
+winner=""
 
-def 
+def draw():
+    screen.blit(bg,(0,0))
+    pygame.draw.rect(screen,"black",border)
+    redfont=font.render(f"Health: {rHealth}",True,"white")
+    screen.blit(redfont,(20,20))
+    yellowfont=font.render(f"Health: {yHealth}",True,"white")
+    screen.blit(yellowfont,(720,20))
+    winnerfont=font.render(f"The winner is: {winner}",True,"white")
+    screen.blit(yellow,(yelship.x,yelship.y))
+    screen.blit(red,(redship.x,redship.y))
+    if gameover:
+        screen.blit(winnerfont,(380,350))
+    for i in yellowBullets:
+        pygame.draw.rect(screen,"white",i)
+    for i in redBullets:
+        pygame.draw.rect(screen,"white",i)
+
+def yelMove(keys_pressed):
+    if keys_pressed[pygame.K_w] and yellow.y>0:
+        yellow.y-=playerSpd
+    if keys_pressed[pygame.K_s] and yellow.y<700:
+        yellow.y+=playerSpd
+    if keys_pressed[pygame.K_a] and yellow.x>0:
+        yellow.x-=playerSpd
+    if keys_pressed[pygame.K_d] and yellow.x<380:
+        yellow.x+=playerSpd
+    
+def redMove(keys_pressed):
+    if keys_pressed[pygame.K_UP] and red.y>0:
+        red.y-=playerSpd
+    if keys_pressed[pygame.K_DOWN] and red.y<700:
+        red.y+=playerSpd
+    if keys_pressed[pygame.K_LEFT] and red.x>420:
+        red.x-=playerSpd
+    if keys_pressed[pygame.K_RIGHT] and red.x<800:
+        red.x+=playerSpd
+
+def bulletMove(yellowBullets,redBullets):
+    for i in yellowBullets:
+        i.x+=bulletSpd
+        if red.colliderect(i):
+            rHealth-=1
+            yellowBullets.remove(i)
+        else:
+            yellowBullets.remove(i)
+    for i in redBullets:
+        i.x-=bulletSpd
+        if yellow.colliderect(i):
+            yHealth-=1
+            redBullets.remove(i)
+        else:
+            redBullets.remove(i)
+        
+def no_health():
+    global winner,gameover
+    if rHealth==0:
+        winner="Yellow"
+        gameover=True
+    elif yHealth==0:
+        winner="Red"
+        gameover=True
+    
+while True:
+    for events in pygame.event.get():
+        if events.type==pygame.QUIT:
+            exit()
+        if events.type==pygame.KEYDOWN:
+            if events.key==pygame.K_f:
+                bullet=pygame.Rect(yellow.x+25,yellow.y+25,10,5)
+                yellowBullets.append(bullet)
+            if events.key==pygame.K_RSHIFT:
+                bullet=pygame.Rect(red.x+25,red.y+25,10,5)
+                redBullets.append(bullet)
+    draw()
+    no_health()
+    bulletMove(yellowBullets,redBullets)
+    keys_pressed=pygame.key.get_pressed()
+    redMove(keys_pressed)
+    yelMove(keys_pressed)
+    pygame.display.update()
