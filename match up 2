@@ -1,0 +1,56 @@
+import pygame
+
+pygame.init()
+
+screen=pygame.display.set_mode((650,700))
+screen.fill("black")
+
+ac=pygame.transform.scale(pygame.image.load("Animal Crossing.jpg"),(50,50))
+crk=pygame.transform.scale(pygame.image.load("Cookie Run Kingdom.jpg"),(50,50))
+hsr=pygame.transform.scale(pygame.image.load("Honkai Star Rail.jpg"),(50,50))
+m=pygame.transform.scale(pygame.image.load("Minecraft.jpg"),(50,50))
+pg=pygame.transform.scale(pygame.image.load("Pokemon Go.jpg"),(50,50))
+r=pygame.transform.scale(pygame.image.load("Roblox.jpg"),(50,50))
+
+font=pygame.font.SysFont("calibri",30)
+
+objective=font.render("Match the image to the name: ",True,"white")
+
+aTxt=font.render("Animal Crossing",True,"white")
+cTxt=font.render("Cookie Run Kingdom",True,"white")
+hTxt=font.render("Honkai Star Rail",True,"white")
+mTxt=font.render("Minecraft",True,"white")
+pTxt=font.render("Pokemon Go",True,"white")
+rTxt=font.render("Roblox",True,"white")
+
+screen.blit(objective,(50,20))
+
+screen.blit(ac,(80,100))
+screen.blit(crk,(80,200))
+screen.blit(hsr,(80,300))
+screen.blit(m,(80,400))
+screen.blit(pg,(80,500))
+screen.blit(r,(80,600))
+
+screen.blit(mTxt,(350,100))
+screen.blit(hTxt,(350,200))
+screen.blit(cTxt,(350,300))
+screen.blit(rTxt,(350,400))
+screen.blit(pTxt,(350,500))
+screen.blit(aTxt,(350,600))
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+        if event.type==pygame.MOUSEBUTTONDOWN:
+            pos1=pygame.mouse.get_pos()
+            circle1=pygame.draw.circle(screen,"grey",pos1,10,0)
+            pygame.display.update()
+        if event.type==pygame.MOUSEBUTTONUP:
+            pos2=pygame.mouse.get_pos()
+            circle2=pygame.draw.circle(screen,"grey",pos2,10,0)
+            pygame.draw.line(screen,"grey",pos1,pos2,5)
+            pygame.display.update()
+
+    pygame.display.update()
