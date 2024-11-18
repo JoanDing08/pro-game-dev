@@ -1,0 +1,67 @@
+import pygame
+pygame.init()
+screen=pygame.display.set_mode((800,700))
+pygame.display.set_caption("Flappy Bird")
+background=pygame.image.load("fb background.png")
+floor=pygame.image.load("floor.png")
+ground_scroll=0
+start=False
+gameover=False
+
+class bird(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.images=[]
+        self.index=0
+        self.counter=0
+        for i in range(1,4):
+            img1=pygame.image.load(f"bird{i}.png")
+            self.images.append(img1)
+        self.image=self.images[self.index]
+        self.rect=self.image.get_rect()
+        self.rect.center=(x,y)
+        self.velocity=0
+        self.clicked=False
+    def update(self):
+        self.counter+=1
+        if self.counter>5:
+            self.index+=1
+            self.counter=0
+            if self.index>=3:
+                self.index=0
+            self.image=self.images[self.index]
+        if start:
+            self.velocity+=0.5
+            if self.velocity>5:
+                self.velocity=5
+            if self.rect.bottom<640:
+                self.rect.y+=self.velocity
+        if gameover==False:
+            if pygame.mouse.get_pressed()[0]==1 and self.clicked==False:
+                self.clicked=True
+                self.velocity=-10
+            if pygame.mouse.get_pressed()[0]==0:
+                self.clicked=False
+                
+            
+        
+birds=pygame.sprite.Group()
+flappy=bird(100,350)
+birds.add(flappy)
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+        if event.type==pygame.MOUSEBUTTONDOWN:
+            start=True
+    screen.blit(background,(0,0))
+    birds.draw(screen)
+    birds.update()
+
+    ground_scroll-=4
+    if abs(ground_scroll)>36:
+        ground_scroll=0
+    screen.blit(floor,(ground_scroll,640))
+
+    pygame.display.update()
