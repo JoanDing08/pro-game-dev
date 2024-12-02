@@ -9,6 +9,7 @@ ground_scroll=0
 start=False
 gameover=False
 passed=False
+clicked=False
 score=0
 pipe_gap=150
 pipe_freq=2500
@@ -30,19 +31,19 @@ class bird(pygame.sprite.Sprite):
         self.clicked=False
     def update(self):
         if start:
-            self.velocity+=0.5
-            if self.velocity>5:
-                self.velocity=5
+            self.velocity+=0.2
+            if self.velocity>2:
+                self.velocity=2
             if self.rect.bottom<640:
                 self.rect.y+=self.velocity
         if gameover==False:
             if pygame.mouse.get_pressed()[0]==1 and self.clicked==False:
                 self.clicked=True
-                self.velocity=-10
+                self.velocity=-4
             if pygame.mouse.get_pressed()[0]==0:
                 self.clicked=False
             self.counter+=1
-            if self.counter>5:
+            if self.counter>2:
                 self.index+=1
                 self.counter=0
                 if self.index>=3:
@@ -60,23 +61,35 @@ class pipe(pygame.sprite.Sprite):
         elif pos==-1:
             self.rect.topleft=(x,y+(pipe_gap//2))
     def update(self):
-        self.rect.x-=4
+        self.rect.x-=1
         if self.rect.right<0:
             self.kill()
 
-pipes=pygame.sprite.Group()
 
+class restart:
+    def __init__(self,x,y):
+        self.image=pygame.image.load("restart.png")
+        self.rect=self.image.get_rect()
+        self.rect.topleft=(x,y)
+    def draw(self):
+        click=False
+        pos=pygame.mouse.get_pos()
+        if self.rect.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0]==1:
+                click=True
+        screen.blit(self.image,(self.rect.x,self.rect.y))
+        return click
+
+pipes=pygame.sprite.Group()
 
 birds=pygame.sprite.Group()
 flappy=bird(100,350)
 birds.add(flappy)
 
+button=restart(350,350)
+
 while True:
-    for event in pygame.event.get():
-        if event.type==pygame.QUIT:
-            exit()
-        if event.type==pygame.MOUSEBUTTONDOWN and start==False and gameover==False:
-            start=True
+
     screen.blit(background,(0,0))
     birds.draw(screen)
     birds.update()
@@ -91,8 +104,7 @@ while True:
             if birds.sprites()[0].rect.left>pipes.sprites()[0].rect.right:
                 score+=1
                 passed=False
-
-    font=pygame.font.SysFont("Determination mono",40)
+    font=pygame.font.SysFont("Determination Sans Web Regular",40)
     txt_score=font.render(f"SCORE: {score}",False,"white")
     screen.blit(txt_score,(10,20))
     if pygame.sprite.groupcollide(birds,pipes,False,False) or flappy.rect.top<0:
@@ -101,7 +113,6 @@ while True:
     if flappy.rect.bottom>=640:
         gameover=True
         start=False
-
     screen.blit(floor,(ground_scroll,640))
     if gameover==False and start==True:
         timer=pygame.time.get_ticks()
@@ -117,5 +128,19 @@ while True:
         ground_scroll-=4
         if abs(ground_scroll)>36:
             ground_scroll=0
+    
+    if gameover:
+        if button.draw():
+            gameover=False
+            score=0
+            flappy.rect.x=100
+            flappy.rect.y=350
+            pipes.empty()
+
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            exit()
+        if event.type==pygame.MOUSEBUTTONDOWN and start==False and gameover==False:
+            start=True
 
     pygame.display.update()
